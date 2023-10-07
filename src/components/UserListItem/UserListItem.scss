@@ -1,0 +1,13 @@
+.user {
+	padding: 12px 15px;
+	border-radius: 6px;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&-link {
+		text-decoration: none;
+		color: #000;
+	}
+}
