@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { addUser } from "../../api";
 import {
 	Box,
 	Typography,
@@ -23,11 +25,38 @@ const style = {
 };
 
 const CreateUserModal = ({ onClose, open }) => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [cPassword, setCPassword] = useState("");
+
+	const handleEmail = (event) => {
+		setEmail(event.target.value);
+	};
+
+	const handlePassword = (event) => {
+		setPassword(event.target.value);
+	};
+
+	const handleCPassword = (event) => {
+		setCPassword(event.target.value);
+	};
+
+	const handleSave = async () => {
+		try {
+			let res = await addUser(email, password, cPassword);
+			if (res) {
+				onClose();
+			}
+		} catch (error) {
+			console.error("Error adding user:", error);
+			throw error;
+		}
+	};
+
 	return (
 		<div>
 			<Modal
 				open={open}
-				onClose={onClose}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
@@ -50,23 +79,31 @@ const CreateUserModal = ({ onClose, open }) => {
 							}}
 						>
 							<TextField
-								id="standard-basic"
+								id="email"
 								label="Email"
 								variant="standard"
+								required
+								type="email"
 								sx={{ width: 1, pb: 2, color: "#000" }}
-								color=""
+								onChange={handleEmail}
 							/>
 							<TextField
-								id="standard-basic"
+								id="password"
 								label="Password"
 								variant="standard"
+								required
+								type="password"
 								sx={{ width: 1, pb: 2 }}
+								onChange={handlePassword}
 							/>
 							<TextField
-								id="standard-basic"
+								id="cPassword"
 								label="C-Password"
 								variant="standard"
+								required
+								type="password"
 								sx={{ width: 1, pb: 2 }}
+								onChange={handleCPassword}
 							/>
 						</FormGroup>
 						<FormGroup
@@ -82,6 +119,7 @@ const CreateUserModal = ({ onClose, open }) => {
 								sx={{
 									color: "text.primary"
 								}}
+								onClick={onClose}
 							>
 								Cancel
 							</Button>
@@ -89,6 +127,7 @@ const CreateUserModal = ({ onClose, open }) => {
 								sx={{
 									color: "text.primary"
 								}}
+								onClick={handleSave}
 							>
 								Save
 							</Button>

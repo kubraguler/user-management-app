@@ -1,14 +1,29 @@
-import { useState } from "react";
-import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { getUsers } from "../../api.js";
 import AddIcon from "@mui/icons-material/Add";
+import { Button } from "@mui/material";
 import CreateUserModal from "../../components/CreateUserModal/CreateUserModal.js";
 import UserListItem from "../../components/UserListItem/UserListItem.js";
 import "./UserListPage.scss";
 
-const UserListPage = ({ users }) => {
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+const UserListPage = () => {
+	const [users, setUsers] = useState([]);
+	const [createUserModalOpen, setCreateUserModalOpen] = useState(false);
+
+	const handleCreateUserModalClose = () => {
+		setCreateUserModalOpen(false);
+		fetchUsers();
+	};
+
+	const fetchUsers = () => {
+		getUsers().then((data) => {
+			setUsers(data);
+		});
+	};
+
+	useEffect(() => {
+		fetchUsers();
+	}, []);
 
 	return (
 		<section className="users">
@@ -18,7 +33,7 @@ const UserListPage = ({ users }) => {
 					users.map((user) => <UserListItem key={user.id} user={user} />)}
 			</ul>
 			<Button
-				onClick={handleOpen}
+				onClick={() => setCreateUserModalOpen(true)}
 				sx={{
 					color: "text.primary",
 					position: "absolute",
@@ -28,7 +43,11 @@ const UserListPage = ({ users }) => {
 				<span>Add</span>
 				<AddIcon />
 			</Button>
-			<CreateUserModal onClose={handleClose} open={open} users={users} />
+			<CreateUserModal
+				onClose={handleCreateUserModalClose}
+				open={createUserModalOpen}
+				users={users}
+			/>
 		</section>
 	);
 };
