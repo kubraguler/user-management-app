@@ -6,11 +6,9 @@ import "./UserListItem.scss";
 const UserListItem = ({ user }) => {
 	return (
 		<>
-			<li className="user">
-				<Link className="user-link" to={`/${user.id}`} key={user.id}>
-					{user.email}
-				</Link>
-			</li>
+			<Link className="user-link" to={`/${user.id}`} key={user.id}>
+				<li className="user">{user.email}</li>
+			</Link>
 			<Divider />
 		</>
 	);
