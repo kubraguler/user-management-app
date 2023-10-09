@@ -4,13 +4,12 @@ import { Box, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import "./Sorting.scss";
 
 export const SortingOptions = {
-	Recommended: 1,
-	First: 2,
-	Latest: 3
+	First: 1,
+	Latest: 2
 };
 
 const Sorting = ({ onValueChange }) => {
-	const [sortValue, setSortValue] = useState(SortingOptions.Recommended);
+	const [sortValue, setSortValue] = useState(SortingOptions.First);
 
 	const handleSelectChange = (event) => {
 		const newValue = event.target.value;
@@ -37,9 +36,8 @@ const Sorting = ({ onValueChange }) => {
 					label="Sort"
 					onChange={handleSelectChange}
 				>
-					<MenuItem value={1}>Recommended</MenuItem>
-					<MenuItem value={2}>First Added</MenuItem>
-					<MenuItem value={3}>Last Added</MenuItem>
+					<MenuItem value={1}>First Added</MenuItem>
+					<MenuItem value={2}>Last Added</MenuItem>
 				</Select>
 			</FormControl>
 		</Box>

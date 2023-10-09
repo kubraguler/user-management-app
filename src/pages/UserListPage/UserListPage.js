@@ -10,7 +10,7 @@ import "./UserListPage.scss";
 const UserListPage = () => {
 	const [users, setUsers] = useState([]);
 	const [createUserModalOpen, setCreateUserModalOpen] = useState(false);
-	const [sortOption, setSortOption] = useState(SortingOptions.Recommended);
+	const [sortOption, setSortOption] = useState(SortingOptions.First);
 
 	const sortData = (option) => {
 		let sorted = [...users];
